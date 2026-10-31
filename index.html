@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smart Attendance — Clean Modern Tracker</title>
+  <meta name="description" content="Calm, modern, and effortless student attendance tracker.">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-wrapper">
+
+    <!-- ================= APP HEADER ================= -->
+    <header class="app-header">
+      <div class="brand-section" id="swissCampusTrigger" title="Edit Student & Campus Profile">
+        <div class="brand-avatar">SA</div>
+        <div class="brand-info">
+          <div class="brand-title" id="labelCampusDept">Computer Science</div>
+          <div class="brand-subtitle" id="labelCampusProgram">Sem 5 • Section A</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Bug Report -->
+        <button id="btnOpenBugSheet" class="icon-btn" title="Report an issue">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </button>
+
+        <!-- Notification Status -->
+        <button id="btnNotifyStatus" class="icon-btn" title="Notification Alerts">
+          <svg id="svgNotifyIcon" class="icon-svg" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="btnThemeToggle" class="icon-btn" title="Toggle Theme">
+          <span id="svgThemeIcon">
+            <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= SEGMENTED NAV PILL BAR ================= -->
+    <nav class="nav-pill-bar swiss-tabs">
+      <button class="nav-pill swiss-tab active" data-tab="tab-routine">Today</button>
+      <button class="nav-pill swiss-tab" data-tab="tab-timetable">Schedule</button>
+      <button class="nav-pill swiss-tab" data-tab="tab-subjects">Courses</button>
+      <button class="nav-pill swiss-tab" data-tab="tab-holidays">Calendar</button>
+      <button class="nav-pill swiss-tab" data-tab="tab-ocr">Scanner</button>
+      <button class="nav-pill swiss-tab" data-tab="tab-config">Settings</button>
+    </nav>
+
+    <main class="app-main">
+
+      <!-- ================= PANE 01: TODAY (MAIN FOCUS) ================= -->
+      <section id="tab-routine" class="swiss-pane-block">
+
+        <!-- Hero Attendance Ring Card -->
+        <div class="hero-card">
+          <div class="hero-top-row">
+            <div class="hero-ring-container">
+              <div class="ring-visual-wrap">
+                <svg class="ring-svg" viewBox="0 0 78 78">
+                  <circle class="ring-bg-circle" cx="39" cy="39" r="34" />
+                  <circle id="ringFillCircle" class="ring-fill-circle" cx="39" cy="39" r="34" />
+                </svg>
+                <div class="ring-center-text">
+                  <span id="telemetryPct" class="ring-pct-number">75.0%</span>
+                </div>
+              </div>
+              <div class="hero-main-stats">
+                <div class="hero-status-title" id="telemetryStatusPill">You're on track</div>
+                <div class="hero-status-subtitle" id="telemetryAdvice">Safe attendance maintained</div>
+              </div>
+            </div>
+            <span id="tagCriteriaCutoff" class="section-badge" style="background: var(--color-brand-soft); color: var(--color-brand);">Target: 75%</span>
+          </div>
+
+          <!-- Compatibility hook for linear progress bar -->
+          <div style="display: none;">
+            <div id="swissGaugeFill" class="swiss-gauge-fill"></div>
+            <span id="gaugeCutoffMarker">75%</span>
+          </div>
+
+          <!-- Bottom metrics breakdown -->
+          <div class="hero-metrics-row">
+            <div class="metric-item">
+              <span class="metric-label">Attended</span>
+              <span id="telemetryAttended" class="metric-val" style="color: var(--color-green);">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Missed</span>
+              <span id="telemetryMissed" class="metric-val" style="color: var(--color-red);">0</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Total Conducted</span>
+              <span id="telemetryConducted" class="metric-val">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Horizontal Strip -->
+        <div id="swissSubjectStrip" style="display: flex; gap: 8px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none;"></div>
+
+        <!-- Deficit Danger Banner -->
+        <div id="swissDangerBanner" class="soft-danger-banner hidden">
+          <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span id="dangerBannerMsg">Attention: Low attendance detected in one of your courses.</span>
+        </div>
+
+        <!-- Today's Routine Section Header -->
+        <div class="section-header">
+          <div>
+            <div class="section-title">
+              <span id="todayDayName">Today</span> • <span id="todayDateFormatted" style="font-weight: 500; color: var(--text-muted); font-size: 13px;">Oct 31</span>
+            </div>
+          </div>
+          <span id="todayStatusTag" class="section-badge">Ready</span>
+        </div>
+
+        <!-- Day Switcher Pills -->
+        <div class="day-scroll-bar">
+          <button class="day-pill-btn swiss-routine-day-btn active" data-routine-day="today">Today</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="1">Mon</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="2">Tue</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="3">Wed</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="4">Thu</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="5">Fri</button>
+          <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="6">Sat</button>
+        </div>
+
+        <!-- Today's Classes List -->
+        <div id="swissTodayFeed" class="class-feed"></div>
+
+      </section>
+
+      <!-- ================= PANE 02: TIMETABLE SCHEDULE ================= -->
+      <section id="tab-timetable" class="swiss-pane-block" style="display: none; padding: 0 16px;">
+        <div class="section-header" style="padding: 0 0 12px;">
+          <span class="section-title">Weekly Schedule</span>
+          <button id="btnOpenAddSlotSheet" class="btn-secondary" style="font-size: 11px; padding: 6px 12px;">+ Add Class</button>
+        </div>
+
+        <!-- Day Selector Pills -->
+        <div class="day-scroll-bar" style="padding: 0 0 12px;">
+          <button class="day-pill-btn swiss-day-btn active" data-day="1">Mon</button>
+          <button class="day-pill-btn swiss-day-btn" data-day="2">Tue</button>
+          <button class="day-pill-btn swiss-day-btn" data-day="3">Wed</button>
+          <button class="day-pill-btn swiss-day-btn" data-day="4">Thu</button>
+          <button class="day-pill-btn swiss-day-btn" data-day="5">Fri</button>
+          <button class="day-pill-btn swiss-day-btn" data-day="6">Sat</button>
+        </div>
+
+        <div id="timetableSlotsList"></div>
+      </section>
+
+      <!-- ================= PANE 03: COURSES (SUBJECTS) ================= -->
+      <section id="tab-subjects" class="swiss-pane-block" style="display: none; padding: 0 16px;">
+        <div class="section-header" style="padding: 0 0 12px;">
+          <span class="section-title">Course Registry</span>
+          <button id="btnOpenAddSubjectSheet" class="btn-secondary" style="font-size: 11px; padding: 6px 12px;">+ New Course</button>
+        </div>
+
+        <div id="subjectRegistryList"></div>
+      </section>
+
+      <!-- ================= PANE 04: CALENDAR & HOLIDAYS ================= -->
+      <section id="tab-holidays" class="swiss-pane-block" style="display: none; padding: 0 16px;">
+        <div class="settings-section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-weight: 700; font-size: 14px;" id="calMonthYearDisplay">October 2026</div>
+            <div style="display: flex; gap: 4px;">
+              <button id="btnCalPrevMonth" class="icon-btn" style="width: 30px; height: 30px;" title="Previous Month">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button id="btnCalNextMonth" class="icon-btn" style="width: 30px; height: 30px;" title="Next Month">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="calWeekdayHeader" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
+            <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+          </div>
+
+          <div id="calDaysGrid" class="cal-grid-container"></div>
+
+          <!-- Selected Date Info Banner -->
+          <div id="calSelectedDateBanner" style="display: none; margin-top: 14px; padding: 12px; border-radius: var(--radius-md); background: var(--bg-card-subtle);">
+            <div id="calSelectedDateTitle" style="font-weight: 700; font-size: 12px;">Selected Date</div>
+            <div id="calSelectedDateDetails" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;"></div>
+          </div>
+
+          <button id="btnExportIcs" class="btn-primary" style="margin-top: 14px;">
+            <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Sync to Phone Calendar (.ics)</span>
+          </button>
+        </div>
+
+        <div class="settings-section-card">
+          <div class="settings-card-title">
+            <span>Academic Holidays & Recesses</span>
+            <button id="btnOpenAddHolidaySheet" class="btn-secondary" style="margin-left: auto; font-size: 10px; padding: 4px 8px;">+ Add</button>
+          </div>
+          <div id="holidayRecordsList"></div>
+        </div>
+      </section>
+
+      <!-- ================= PANE 05: TIMETABLE SCANNER (OCR) ================= -->
+      <section id="tab-ocr" class="swiss-pane-block" style="display: none; padding: 0 16px;">
+        <div class="settings-section-card">
+          <div class="settings-card-title">Snap or Upload Timetable</div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+            Take a photo of your printed college timetable. The optical recognition parser will read your classes and fill your schedule automatically.
+          </p>
+
+          <div id="ocrUploadDropzone" class="ocr-drop-box">
+            <input type="file" id="ocrInputFile" accept="image/*" style="display: none;">
+            <svg class="icon-svg" style="width: 32px; height: 32px; color: var(--color-brand); margin-bottom: 8px;" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <div style="font-weight: 700; font-size: 13px;">Tap to Choose or Snap Photo</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supports JPG, PNG, WEBP</div>
+          </div>
+
+          <div id="ocrPreviewContainer" style="display: none; margin-top: 14px; text-align: center;">
+            <img id="ocrPreviewImg" src="" alt="OCR Preview" style="max-height: 180px; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-card);">
+            <canvas id="ocrCanvas" style="display: none;"></canvas>
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+              <button id="btnExecuteOcr" class="btn-primary" style="flex: 2;">Analyze Schedule</button>
+              <button id="btnClearOcr" class="btn-secondary" style="flex: 1;">Clear</button>
+            </div>
+          </div>
+
+          <!-- Detected slots review -->
+          <div id="ocrResultBox" style="display: none; margin-top: 14px; padding: 14px; border-radius: var(--radius-md); background: var(--bg-card-subtle);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-weight: 700; font-size: 12px;">Detected Classes</span>
+              <span id="ocrDetectedCount" class="section-badge" style="color: var(--color-green);">0 Found</span>
+            </div>
+            <div id="ocrSlotsPreviewList" style="margin-bottom: 12px;"></div>
+            <button id="btnCommitOcrSlots" class="btn-primary" style="background: var(--color-green);">Confirm & Add to Timetable</button>
+          </div>
+
+          <!-- Presets -->
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-card);">
+            <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Or load a sample curriculum:</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="btn-secondary preset-btn" data-preset="cse" style="font-size: 11px;">Computer Science</button>
+              <button class="btn-secondary preset-btn" data-preset="ece" style="font-size: 11px;">Electronics</button>
+              <button class="btn-secondary preset-btn" data-preset="bba" style="font-size: 11px;">Management</button>
+            </div>
+          </div>
+
+          <div id="ocrTelemetryLog" style="font-size: 11px; color: var(--text-muted); margin-top: 12px; font-family: var(--font-mono); line-height: 1.4;"></div>
+        </div>
+      </section>
+
+      <!-- ================= PANE 06: SETTINGS ================= -->
+      <section id="tab-config" class="swiss-pane-block" style="display: none; padding: 0 16px;">
+
+        <!-- Student Profile Card -->
+        <div class="settings-section-card">
+          <div class="settings-card-title">Student Profile</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-field-group">
+              <label class="input-label" for="cfgStudentName">Your Name</label>
+              <input type="text" id="cfgStudentName" class="text-input" placeholder="e.g. Sohan Gowda">
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="cfgStudentUsn">Roll No / USN</label>
+              <input type="text" id="cfgStudentUsn" class="text-input" placeholder="e.g. 1RV22CS100">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-field-group">
+              <label class="input-label" for="cfgCampusDept">Department</label>
+              <input type="text" id="cfgCampusDept" class="text-input" placeholder="Computer Science">
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="cfgCampusProgram">Semester / Section</label>
+              <input type="text" id="cfgCampusProgram" class="text-input" placeholder="Sem 5 • Sec A">
+            </div>
+          </div>
+          <button id="btnSaveProfile" class="btn-secondary" style="width: 100%; margin-top: 4px;">Save Profile</button>
+        </div>
+
+        <!-- Target Attendance Slider Card -->
+        <div class="settings-section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div class="settings-card-title" style="margin: 0;">Target Attendance</div>
+            <span id="cfgCutoffDisplay" style="font-size: 15px; font-weight: 800; color: var(--color-brand);">75.0%</span>
+          </div>
+          <input type="range" id="cfgCutoffRange" min="50" max="95" step="1" value="75" style="width: 100%; accent-color: var(--color-brand); margin: 8px 0;">
+          <input type="number" id="cfgCutoff" class="text-input" min="50" max="95" value="75" style="display: none;">
+          <p style="font-size: 11px; color: var(--text-muted);">Deficit alerts trigger when a course drops below this target.</p>
+        </div>
+
+        <!-- Notification Parameters Card -->
+        <div class="settings-section-card">
+          <div class="settings-card-title">Notifications & Alarms</div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+            <div class="input-field-group">
+              <label class="input-label" for="cfgPreAlertMins">Pre-Class Alert</label>
+              <select id="cfgPreAlertMins" class="select-input">
+                <option value="5">5 mins before</option>
+                <option value="10" selected>10 mins before</option>
+                <option value="15">15 mins before</option>
+                <option value="20">20 mins before</option>
+              </select>
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="cfgWeekStructure">Academic Week</label>
+              <select id="cfgWeekStructure" class="select-input">
+                <option value="6" selected>6-Day (Mon–Sat)</option>
+                <option value="5">5-Day (Mon–Fri)</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="toggle-row">
+            <span>Acoustic Chime Sounds</span>
+            <input type="checkbox" id="cfgSoundToggle" checked>
+          </label>
+          <label class="toggle-row">
+            <span>Haptic Phone Vibration</span>
+            <input type="checkbox" id="cfgVibrationToggle" checked>
+          </label>
+          <label class="toggle-row">
+            <span>Post-Class Attendance Prompt</span>
+            <input type="checkbox" id="cfgPostClassToggle" checked>
+          </label>
+
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button id="btnTestAudioChime" class="btn-secondary" style="flex: 1;">Test Chime</button>
+            <button id="btnGrantSystemPerm" class="btn-secondary" style="flex: 1;">Allow Notifications</button>
+          </div>
+        </div>
+
+        <!-- Storage & Reset Actions Card -->
+        <div class="settings-section-card">
+          <div class="settings-card-title">Data & Maintenance</div>
+          <div style="font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            <div><strong>Storage:</strong> <span id="storageStateSize">Calculating...</span></div>
+            <div><strong>Archived Dates:</strong> <span id="storageDailyCount">0</span> dates stored locally</div>
+            <div><strong>Privacy:</strong> 100% on your device. Zero cloud telemetry.</div>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="btnResetTodayActions" class="btn-secondary" style="flex: 1;">Reset Today's Marks</button>
+            <button id="btnResetTallies" class="btn-secondary" style="flex: 1;">New Semester Reset</button>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button id="btnExportJson" class="btn-secondary" style="flex: 1;">Backup Data</button>
+            <button id="btnImportJson" class="btn-secondary" style="flex: 1;">Restore</button>
+            <input type="file" id="inpRestoreBackup" accept=".json" style="display: none;">
+            <button id="btnPurgeState" class="btn-secondary btn-danger" style="flex: 1;">Clear All</button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ================= FULL DAY APPRECIATION MODAL ================= -->
+    <div id="modalCelebration" class="modal-overlay hidden">
+      <div class="modal-box" style="text-align: center;">
+        <div style="width: 54px; height: 54px; border-radius: var(--radius-pill); background: var(--color-green-soft); color: var(--color-green); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+          <svg class="icon-svg" style="width: 28px; height: 28px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Day Conquered!</div>
+        <p id="celebrationQuoteDisplay" style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+          Hooray you did it! You attended the whole day!
+        </p>
+        <button id="btnCloseCelebration" class="btn-primary" style="background: var(--color-green);">Awesome</button>
+      </div>
+    </div>
+
+    <!-- ================= ADD / EDIT CLASS SLOT MODAL ================= -->
+    <div id="modalSlot" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title" id="slotModalHeading">Add Class Slot</div>
+          <button id="btnCloseSlotModal" class="modal-close-btn">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="formSlot">
+          <input type="hidden" id="slotIdInput" value="">
+          <div class="input-field-group">
+            <label class="input-label" for="slotDayInput">Weekday</label>
+            <select id="slotDayInput" class="select-input">
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="slotCourseSelect">Course</label>
+            <select id="slotCourseSelect" class="select-input" required></select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-field-group">
+              <label class="input-label" for="slotStartInp">Start Time</label>
+              <input type="time" id="slotStartInp" class="text-input" required>
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="slotEndInp">End Time</label>
+              <input type="time" id="slotEndInp" class="text-input" required>
+            </div>
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="slotRoomInp">Room / Facility</label>
+            <input type="text" id="slotRoomInp" class="text-input" placeholder="e.g. Room 101 or Lab 2">
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button type="submit" class="btn-primary" style="flex: 2;">Save Class</button>
+            <button type="button" id="btnCancelSlotModal" class="btn-secondary" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= ADD / EDIT SUBJECT MODAL ================= -->
+    <div id="modalSubject" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title" id="subjectModalHeading">Add Course</div>
+          <button id="btnCloseSubjectModal" class="modal-close-btn">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="formSubject">
+          <input type="hidden" id="subIdInput" value="">
+          <div class="input-field-group">
+            <label class="input-label" for="subNameInp">Course Name</label>
+            <input type="text" id="subNameInp" class="text-input" placeholder="e.g. Operating Systems" required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-field-group">
+              <label class="input-label" for="subCodeInp">Code</label>
+              <input type="text" id="subCodeInp" class="text-input" placeholder="e.g. CS203">
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="subTeacherInp">Instructor</label>
+              <input type="text" id="subTeacherInp" class="text-input" placeholder="e.g. Dr. Varma">
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="input-field-group">
+              <label class="input-label" for="subAttendedInp">Classes Attended</label>
+              <input type="number" id="subAttendedInp" class="text-input" min="0" value="0">
+            </div>
+            <div class="input-field-group">
+              <label class="input-label" for="subMissedInp">Classes Missed</label>
+              <input type="number" id="subMissedInp" class="text-input" min="0" value="0">
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button type="submit" class="btn-primary" style="flex: 2;">Save Course</button>
+            <button type="button" id="btnCancelSubjectModal" class="btn-secondary" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= ADD HOLIDAY MODAL ================= -->
+    <div id="modalHoliday" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title">Add Holiday / Recess</div>
+          <button id="btnCloseHolidayModal" class="modal-close-btn">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <form id="formHoliday">
+          <div class="input-field-group">
+            <label class="input-label" for="holidayDateInp">Date</label>
+            <input type="date" id="holidayDateInp" class="text-input" required>
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="holidayTitleInp">Holiday Name</label>
+            <input type="text" id="holidayTitleInp" class="text-input" placeholder="e.g. Sports Day" required>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button type="submit" class="btn-primary" style="flex: 2;">Add Holiday</button>
+            <button type="button" id="btnCancelHolidayModal" class="btn-secondary" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= BUG REPORT MODAL (FORMSPREE) ================= -->
+    <div id="modalBugReport" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title">Send Feedback / Bug Report</div>
+          <button id="btnCloseBugReport" class="modal-close-btn">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+          Smart Attendance v2.4 • Developed by Sohan Gowda. Reports are dispatched securely to the developer via Formspree.
+        </p>
+        <form id="formBugReport" action="https://formspree.io/f/xvgopkzw" method="POST">
+          <div class="input-field-group">
+            <label class="input-label" for="reportEmailInp">Your Email (optional)</label>
+            <input type="email" name="email" id="reportEmailInp" class="text-input" placeholder="sohan@example.com">
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="reportCategorySel">Category</label>
+            <select name="category" id="reportCategorySel" class="select-input">
+              <option value="ui_ux">Design / Usability</option>
+              <option value="attendance_calculation">Attendance Calculations</option>
+              <option value="timetable_sync">Timetable Schedule</option>
+              <option value="notifications">Notifications & Alarms</option>
+              <option value="scanner_ocr">Scanner / OCR</option>
+            </select>
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="reportMessageInp">Message</label>
+            <textarea name="message" id="reportMessageInp" class="text-input" rows="3" placeholder="Describe the issue or idea..." required></textarea>
+          </div>
+          <div id="bugReportNotice" style="font-size: 11px; font-weight: 600; margin-bottom: 8px;"></div>
+          <button type="submit" id="btnSubmitBugReport" class="btn-primary">Send Report</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

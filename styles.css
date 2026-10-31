@@ -1,0 +1,915 @@
+/* ==========================================================================
+   SMART ATTENDANCE — CALM MODERN MINIMALISM
+   Clean, airy, student-first UI with generous whitespace, soft rounded cards,
+   vibrant status feedback, and zero cognitive clutter.
+   ========================================================================== */
+
+:root {
+  /* Light Mode Palette */
+  --bg-app: #F8F9FA;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #F3F4F6;
+  --bg-input: #F3F4F6;
+  --border-card: rgba(0, 0, 0, 0.07);
+  --border-focus: #4F46E5;
+
+  --text-main: #111827;
+  --text-muted: #6B7280;
+  --text-subtle: #9CA3AF;
+
+  --color-green: #10B981;
+  --color-green-soft: #ECFDF5;
+  --color-green-border: #A7F3D0;
+
+  --color-red: #EF4444;
+  --color-red-soft: #FEF2F2;
+  --color-red-border: #FECACA;
+
+  --color-amber: #F59E0B;
+  --color-amber-soft: #FFFBEB;
+
+  --color-brand: #4F46E5;
+  --color-brand-soft: #EEF2FF;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-pop: 0 12px 30px rgba(0, 0, 0, 0.12);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Roboto Mono", "Menlo", monospace;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Palette */
+  --bg-app: #0B0E14;
+  --bg-card: #151922;
+  --bg-card-subtle: #1C222E;
+  --bg-input: #1C222E;
+  --border-card: rgba(255, 255, 255, 0.08);
+  --border-focus: #818CF8;
+
+  --text-main: #F9FAFB;
+  --text-muted: #9CA3AF;
+  --text-subtle: #6B7280;
+
+  --color-green: #10B981;
+  --color-green-soft: rgba(16, 185, 129, 0.14);
+  --color-green-border: rgba(16, 185, 129, 0.35);
+
+  --color-red: #F87171;
+  --color-red-soft: rgba(239, 68, 68, 0.14);
+  --color-red-border: rgba(239, 68, 68, 0.35);
+
+  --color-amber: #FBBF24;
+  --color-amber-soft: rgba(245, 158, 11, 0.14);
+
+  --color-brand: #6366F1;
+  --color-brand-soft: rgba(99, 102, 241, 0.16);
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.app-wrapper {
+  width: 100%;
+  max-width: 520px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= TOP APP BAR ================= */
+.app-header {
+  padding: 16px 18px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-app);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.brand-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-brand), #8B5CF6);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: var(--bg-card-subtle);
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-svg-sm {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================= MODERN PILL NAVIGATION ================= */
+.nav-pill-bar {
+  display: flex;
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  margin: 0 16px 14px;
+  gap: 4px;
+}
+
+.nav-pill {
+  flex: 1;
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.nav-pill:hover {
+  color: var(--text-main);
+}
+
+.nav-pill.active {
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* ================= HERO CARD (OVERALL ATTENDANCE) ================= */
+.hero-card {
+  margin: 0 16px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-ring-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ring-visual-wrap {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+}
+
+.ring-svg {
+  transform: rotate(-90deg);
+  width: 78px;
+  height: 78px;
+}
+
+.ring-bg-circle {
+  fill: none;
+  stroke: var(--bg-card-subtle);
+  stroke-width: 7;
+}
+
+.ring-fill-circle {
+  fill: none;
+  stroke: var(--color-green);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 213.6;
+  stroke-dashoffset: 40;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
+}
+
+.ring-fill-circle.danger {
+  stroke: var(--color-red);
+}
+
+.ring-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.ring-pct-number {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.hero-main-stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-status-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 2px;
+}
+
+.hero-status-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* Can I Bunk? Pill */
+.hero-bunk-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.hero-bunk-pill.safe {
+  background: var(--color-green-soft);
+  color: var(--color-green);
+  border: 1px solid var(--color-green-border);
+}
+
+.hero-bunk-pill.danger {
+  background: var(--color-red-soft);
+  color: var(--color-red);
+  border: 1px solid var(--color-red-border);
+}
+
+.hero-metrics-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-card);
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  letter-spacing: 0.5px;
+}
+
+.metric-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Danger alert banner */
+.soft-danger-banner {
+  margin: 0 16px 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-red-soft);
+  border: 1px solid var(--color-red-border);
+  color: var(--color-red);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.soft-danger-banner.hidden {
+  display: none !important;
+}
+
+/* ================= SECTION HEADINGS & DAY SWITCHER ================= */
+.section-header {
+  padding: 0 18px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.section-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+}
+
+/* Clean Day Switcher */
+.day-scroll-bar {
+  display: flex;
+  gap: 6px;
+  padding: 0 16px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.day-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.day-pill-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.day-pill-btn:hover {
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+.day-pill-btn.active {
+  background: var(--color-brand);
+  color: #FFFFFF;
+  border-color: var(--color-brand);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+/* ================= TODAY'S CLASS CARDS ================= */
+.class-feed {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.class-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.class-card:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.class-card.attended {
+  border-left: 4px solid var(--color-green);
+}
+
+.class-card.missed {
+  border-left: 4px solid var(--color-red);
+}
+
+.class-card.cancelled {
+  border-left: 4px solid var(--text-subtle);
+  opacity: 0.85;
+}
+
+.class-card.active-live {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 1px var(--color-brand);
+}
+
+.class-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.class-time-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.class-room-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.class-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 4px;
+}
+
+.class-faculty {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Interactive Action Buttons */
+.class-actions-row {
+  display: flex;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-card);
+}
+
+.btn-action-pill {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-card);
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-action-pill:hover {
+  transform: translateY(-1px);
+}
+
+.btn-action-pill:active {
+  transform: scale(0.96);
+}
+
+/* Present Active */
+.btn-action-pill.btn-yes.active {
+  background: var(--color-green);
+  color: #FFFFFF;
+  border-color: var(--color-green);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+}
+
+/* Absent Active */
+.btn-action-pill.btn-no.active {
+  background: var(--color-red);
+  color: #FFFFFF;
+  border-color: var(--color-red);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+}
+
+/* No Class Active */
+.btn-action-pill.btn-cancel.active {
+  background: var(--text-muted);
+  color: #FFFFFF;
+  border-color: var(--text-muted);
+  font-weight: 700;
+}
+
+/* ================= SUBJECT CARDS (TAB 02) ================= */
+.subject-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.subject-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.subject-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-brand);
+}
+
+.subject-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subject-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.subject-pct-badge {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.subject-pct-val {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.subject-pct-val.safe {
+  color: var(--color-green);
+}
+
+.subject-pct-val.danger {
+  color: var(--color-red);
+}
+
+.subject-bunk-hint {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ================= MODERN BUTTONS ================= */
+.btn-primary {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--color-brand);
+  color: #FFFFFF;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  transition: all 0.18s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-card);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-subtle);
+}
+
+.btn-secondary:active {
+  transform: scale(0.96);
+}
+
+.btn-danger {
+  color: var(--color-red);
+  border-color: var(--color-red-border);
+  background: var(--color-red-soft);
+}
+
+/* ================= SETTINGS & CARDS ================= */
+.settings-section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.input-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.text-input, .select-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-card);
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.text-input:focus, .select-input:focus {
+  border-color: var(--border-focus);
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.toggle-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+}
+
+/* ================= MODALS & SHEETS ================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 440px;
+  padding: 22px;
+  box-shadow: var(--shadow-pop);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ================= OCR SCANNER SECTION ================= */
+.ocr-drop-box {
+  border: 2px dashed var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 28px 16px;
+  text-align: center;
+  background: var(--bg-card-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ocr-drop-box:hover {
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
+}
+
+/* ================= CALENDAR GRID ================= */
+.cal-grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.cal-header-cell {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 6px 0;
+}
+
+.cal-day-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  position: relative;
+}
+
+.cal-day-cell:hover {
+  background: var(--bg-card-subtle);
+}
+
+.cal-day-cell.today {
+  border: 2px solid var(--color-brand);
+  font-weight: 800;
+}
+
+.cal-day-cell.selected {
+  background: var(--color-brand);
+  color: #FFFFFF !important;
+}
+
+.cal-day-cell.holiday {
+  background: var(--color-amber-soft);
+  color: var(--color-amber);
+}
+
+.cal-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  margin-top: 2px;
+}
+
+.cal-dot.green { background: var(--color-green); }
+.cal-dot.red { background: var(--color-red); }

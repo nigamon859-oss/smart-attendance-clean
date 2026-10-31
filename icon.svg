@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Swiss Minimalist Charcoal/Obsidian Base -->
+    <linearGradient id="swissBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111114" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+
+    <!-- Frosted Glass Plate Gradient -->
+    <linearGradient id="glassPlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.16)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.03)" />
+    </linearGradient>
+
+    <!-- Swiss International Precision Accent -->
+    <linearGradient id="swissRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3B30" />
+      <stop offset="100%" stop-color="#E0241A" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#swissBg)" />
+
+  <!-- Architectural Precision Grid Sub-lines -->
+  <g stroke="rgba(255, 255, 255, 0.05)" stroke-width="1.5">
+    <line x1="96" y1="0" x2="96" y2="512" />
+    <line x1="256" y1="0" x2="256" y2="512" />
+    <line x1="416" y1="0" x2="416" y2="512" />
+    <line x1="0" y1="96" x2="512" y2="96" />
+    <line x1="0" y1="256" x2="512" y2="256" />
+    <line x1="0" y1="416" x2="512" y2="416" />
+  </g>
+
+  <!-- Frosted Glass Square Tile -->
+  <rect x="76" y="76" width="360" height="360" rx="44" fill="url(#glassPlate)" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2" />
+
+  <!-- Diagonal Specular Reflection Line -->
+  <line x1="100" y1="180" x2="260" y2="100" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round" />
+
+  <!-- Modernist Typographic Monogram: 'SA' (Smart Attendance) -->
+  <!-- Geometric 'S' Structure -->
+  <path d="M 230 180 L 170 180 C 153 180 140 193 140 210 C 140 227 153 240 170 240 L 210 240 C 227 240 240 253 240 270 C 240 287 227 300 210 300 L 140 300" 
+        fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="square" stroke-linejoin="miter" />
+
+  <!-- Geometric 'A' Structure -->
+  <path d="M 290 300 L 335 180 L 380 300" 
+        fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="square" stroke-linejoin="miter" />
+  <line x1="305" y1="260" x2="365" y2="260" stroke="#FFFFFF" stroke-width="18" />
+
+  <!-- Precision Swiss Cross / Metric Indicator -->
+  <rect x="238" y="360" width="36" height="12" rx="2" fill="url(#swissRed)" />
+  <rect x="250" y="348" width="12" height="36" rx="2" fill="url(#swissRed)" />
+
+  <!-- Corner Alignment Crosshairs -->
+  <g stroke="rgba(255, 255, 255, 0.4)" stroke-width="2">
+    <line x1="100" y1="92" x2="100" y2="108" />
+    <line x1="92" y1="100" x2="108" y2="100" />
+
+    <line x1="412" y1="404" x2="412" y2="420" />
+    <line x1="404" y1="412" x2="420" y2="412" />
+  </g>
+</svg>

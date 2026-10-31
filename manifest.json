@@ -1,0 +1,19 @@
+{
+  "name": "Smart Attendance Tracker",
+  "short_name": "SmartAttend",
+  "description": "Offline algorithmic timetable and attendance tracker for students with safe bunk calculator and alerts",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#09090B",
+  "theme_color": "#09090B",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity", "utilities"]
+}
