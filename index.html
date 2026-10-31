@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Smart Attendance — Clean Modern Tracker</title>
-  <meta name="description" content="Calm, modern, and effortless student attendance tracker.">
+  <title>Smart Attendance — Logistics Route Tracker</title>
+  <meta name="description" content="Effortless student attendance tracking designed like a modern logistics route expedition.">
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#0B0E14">
+  <meta name="theme-color" content="#0A0D14">
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="apple-touch-icon" href="./icon.svg">
   <link rel="stylesheet" href="./styles.css">
@@ -14,10 +14,13 @@
 <body>
   <div class="app-wrapper">
 
-    <!-- ================= APP HEADER ================= -->
+    <!-- ================= OPERATOR APP HEADER ================= -->
     <header class="app-header">
       <div class="brand-section" id="swissCampusTrigger" title="Edit Student & Campus Profile">
-        <div class="brand-avatar">SA</div>
+        <div class="brand-avatar">
+          <span>SA</span>
+          <span class="brand-avatar-pulse"></span>
+        </div>
         <div class="brand-info">
           <div class="brand-title" id="labelCampusDept">Computer Science</div>
           <div class="brand-subtitle" id="labelCampusProgram">Sem 5 • Section A</div>
@@ -25,18 +28,18 @@
       </div>
 
       <div class="header-actions">
-        <!-- Bug Report -->
-        <button id="btnOpenBugSheet" class="icon-btn" title="Report an issue">
+        <!-- Bug Report / Feedback -->
+        <button id="btnOpenBugSheet" class="icon-btn" title="Report issue or feedback">
           <svg class="icon-svg" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </button>
 
-        <!-- Notification Status -->
-        <button id="btnNotifyStatus" class="icon-btn" title="Notification Alerts">
+        <!-- Notification Alerts -->
+        <button id="btnNotifyStatus" class="icon-btn" title="Notification Alerts & Permissions">
           <svg id="svgNotifyIcon" class="icon-svg" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
         </button>
 
         <!-- Theme Toggle -->
-        <button id="btnThemeToggle" class="icon-btn" title="Toggle Theme">
+        <button id="btnThemeToggle" class="icon-btn" title="Toggle Dark/Light Mode">
           <span id="svgThemeIcon">
             <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           </span>
@@ -44,85 +47,94 @@
       </div>
     </header>
 
-    <!-- ================= SEGMENTED NAV PILL BAR ================= -->
-    <nav class="nav-pill-bar swiss-tabs">
-      <button class="nav-pill swiss-tab active" data-tab="tab-routine">Today</button>
-      <button class="nav-pill swiss-tab" data-tab="tab-timetable">Schedule</button>
-      <button class="nav-pill swiss-tab" data-tab="tab-subjects">Courses</button>
-      <button class="nav-pill swiss-tab" data-tab="tab-holidays">Calendar</button>
-      <button class="nav-pill swiss-tab" data-tab="tab-ocr">Scanner</button>
-      <button class="nav-pill swiss-tab" data-tab="tab-config">Settings</button>
-    </nav>
-
     <main class="app-main">
 
-      <!-- ================= PANE 01: TODAY (MAIN FOCUS) ================= -->
+      <!-- ================= PANE 01: TODAY ROUTE EXPEDITION ================= -->
       <section id="tab-routine" class="swiss-pane-block">
 
-        <!-- Hero Attendance Ring Card -->
-        <div class="hero-card">
-          <div class="hero-top-row">
-            <div class="hero-ring-container">
-              <div class="ring-visual-wrap">
-                <svg class="ring-svg" viewBox="0 0 78 78">
-                  <circle class="ring-bg-circle" cx="39" cy="39" r="34" />
-                  <circle id="ringFillCircle" class="ring-fill-circle" cx="39" cy="39" r="34" />
-                </svg>
-                <div class="ring-center-text">
-                  <span id="telemetryPct" class="ring-pct-number">75.0%</span>
-                </div>
-              </div>
-              <div class="hero-main-stats">
-                <div class="hero-status-title" id="telemetryStatusPill">You're on track</div>
-                <div class="hero-status-subtitle" id="telemetryAdvice">Safe attendance maintained</div>
-              </div>
+        <!-- Active Route Expedition Dispatch Card (Hero) -->
+        <div class="route-dispatch-card">
+          <div class="dispatch-header-row">
+            <div class="dispatch-meta">
+              <span class="dispatch-label">Active Expedition</span>
+              <span class="dispatch-route-id">Today's Delivery Route</span>
             </div>
-            <span id="tagCriteriaCutoff" class="section-badge" style="background: var(--color-brand-soft); color: var(--color-brand);">Target: 75%</span>
+            <div id="telemetryStatusPill" class="dispatch-status-badge">
+              <span class="status-dot-pulse"></span>
+              <span>Route Active</span>
+            </div>
           </div>
 
-          <!-- Compatibility hook for linear progress bar -->
+          <!-- Route Vector Progress Vector Bar -->
+          <div class="route-vector-container">
+            <div class="route-vector-labels">
+              <span>Start of Day</span>
+              <span id="routeProgressText">0 of 0 stops completed</span>
+              <span>Dismissal</span>
+            </div>
+            <div class="route-vector-bar-wrap">
+              <div id="routeProgressFill" class="route-vector-fill">
+                <div class="route-vector-marker"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big Telemetry Highlight Row -->
+          <div class="dispatch-telemetry-row">
+            <div class="telemetry-primary">
+              <span id="telemetryPct" class="telemetry-pct-number">75.0%</span>
+              <span id="tagCriteriaCutoff" class="telemetry-target-tag">Target: 75%</span>
+            </div>
+            <div id="telemetryAdvice" class="telemetry-advice-pill">
+              Safe attendance maintained
+            </div>
+          </div>
+
+          <!-- Compatibility Fallback Hooks -->
           <div style="display: none;">
             <div id="swissGaugeFill" class="swiss-gauge-fill"></div>
             <span id="gaugeCutoffMarker">75%</span>
+            <svg viewBox="0 0 10 10"><circle id="ringFillCircle" cx="5" cy="5" r="4"></circle></svg>
           </div>
 
-          <!-- Bottom metrics breakdown -->
-          <div class="hero-metrics-row">
-            <div class="metric-item">
-              <span class="metric-label">Attended</span>
-              <span id="telemetryAttended" class="metric-val" style="color: var(--color-green);">0</span>
+          <!-- Metrics Grid: Attended, Missed, Total Conducted -->
+          <div class="route-metrics-grid">
+            <div class="metric-tile">
+              <span class="metric-tile-label">Delivered</span>
+              <span id="telemetryAttended" class="metric-tile-val" style="color: var(--color-emerald);">0</span>
             </div>
-            <div class="metric-item">
-              <span class="metric-label">Missed</span>
-              <span id="telemetryMissed" class="metric-val" style="color: var(--color-red);">0</span>
+            <div class="metric-tile">
+              <span class="metric-tile-label">Skipped</span>
+              <span id="telemetryMissed" class="metric-tile-val" style="color: var(--color-crimson);">0</span>
             </div>
-            <div class="metric-item">
-              <span class="metric-label">Total Conducted</span>
-              <span id="telemetryConducted" class="metric-val">0</span>
+            <div class="metric-tile">
+              <span class="metric-tile-label">Conducted</span>
+              <span id="telemetryConducted" class="metric-tile-val">0</span>
             </div>
           </div>
         </div>
 
-        <!-- Course Horizontal Strip -->
-        <div id="swissSubjectStrip" style="display: flex; gap: 8px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none;"></div>
+        <!-- Horizontal Course Compliance Quick Strip -->
+        <div id="swissSubjectStrip" class="course-strip-wrap"></div>
 
-        <!-- Deficit Danger Banner -->
+        <!-- Deficit Danger Alert Banner -->
         <div id="swissDangerBanner" class="soft-danger-banner hidden">
-          <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          <span id="dangerBannerMsg">Attention: Low attendance detected in one of your courses.</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span id="dangerBannerMsg">Attention: Low attendance detected in course.</span>
+          </div>
+          <button id="btnDismissDanger" class="icon-btn" style="width: 26px; height: 26px; border: none; background: transparent; color: inherit; cursor: pointer;">✕</button>
         </div>
 
-        <!-- Today's Routine Section Header -->
-        <div class="section-header">
-          <div>
-            <div class="section-title">
-              <span id="todayDayName">Today</span> • <span id="todayDateFormatted" style="font-weight: 500; color: var(--text-muted); font-size: 13px;">Oct 31</span>
-            </div>
+        <!-- Route Day Expedition Switcher -->
+        <div class="expedition-nav-row">
+          <div class="expedition-title">
+            <span id="todayDayName">Today's Route</span>
+            <span id="todayDateFormatted" class="expedition-date">Nov 1</span>
           </div>
           <span id="todayStatusTag" class="section-badge">Ready</span>
         </div>
 
-        <!-- Day Switcher Pills -->
         <div class="day-scroll-bar">
           <button class="day-pill-btn swiss-routine-day-btn active" data-routine-day="today">Today</button>
           <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="1">Mon</button>
@@ -133,20 +145,23 @@
           <button class="day-pill-btn swiss-routine-day-btn" data-routine-day="6">Sat</button>
         </div>
 
-        <!-- Today's Classes List -->
-        <div id="swissTodayFeed" class="class-feed"></div>
+        <!-- Vertical Connected Route Waypoint Stepper List -->
+        <div id="swissTodayFeed"></div>
 
       </section>
 
       <!-- ================= PANE 02: TIMETABLE SCHEDULE ================= -->
       <section id="tab-timetable" class="swiss-pane-block" style="display: none; padding: 0 16px;">
-        <div class="section-header" style="padding: 0 0 12px;">
-          <span class="section-title">Weekly Schedule</span>
-          <button id="btnOpenAddSlotSheet" class="btn-secondary" style="font-size: 11px; padding: 6px 12px;">+ Add Class</button>
+        <div class="section-header" style="padding: 12px 2px 14px;">
+          <div>
+            <div class="section-title">Weekly Schedule Route</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Manage periodic waypoints for each day</div>
+          </div>
+          <button id="btnOpenAddSlotSheet" class="btn-secondary" style="font-size: 11px; padding: 7px 14px;">+ Add Class</button>
         </div>
 
         <!-- Day Selector Pills -->
-        <div class="day-scroll-bar" style="padding: 0 0 12px;">
+        <div class="day-scroll-bar" style="padding: 0 0 14px;">
           <button class="day-pill-btn swiss-day-btn active" data-day="1">Mon</button>
           <button class="day-pill-btn swiss-day-btn" data-day="2">Tue</button>
           <button class="day-pill-btn swiss-day-btn" data-day="3">Wed</button>
@@ -158,44 +173,47 @@
         <div id="timetableSlotsList"></div>
       </section>
 
-      <!-- ================= PANE 03: COURSES (SUBJECTS) ================= -->
+      <!-- ================= PANE 03: COURSE REGISTRY (FLEET) ================= -->
       <section id="tab-subjects" class="swiss-pane-block" style="display: none; padding: 0 16px;">
-        <div class="section-header" style="padding: 0 0 12px;">
-          <span class="section-title">Course Registry</span>
-          <button id="btnOpenAddSubjectSheet" class="btn-secondary" style="font-size: 11px; padding: 6px 12px;">+ New Course</button>
+        <div class="section-header" style="padding: 12px 2px 14px;">
+          <div>
+            <div class="section-title">Course Registry & Bunks</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Monitor compliance and calculate bunks</div>
+          </div>
+          <button id="btnOpenAddSubjectSheet" class="btn-secondary" style="font-size: 11px; padding: 7px 14px;">+ New Course</button>
         </div>
 
         <div id="subjectRegistryList"></div>
       </section>
 
-      <!-- ================= PANE 04: CALENDAR & HOLIDAYS ================= -->
+      <!-- ================= PANE 04: CALENDAR & RECESS ================= -->
       <section id="tab-holidays" class="swiss-pane-block" style="display: none; padding: 0 16px;">
-        <div class="settings-section-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div style="font-weight: 700; font-size: 14px;" id="calMonthYearDisplay">October 2026</div>
-            <div style="display: flex; gap: 4px;">
-              <button id="btnCalPrevMonth" class="icon-btn" style="width: 30px; height: 30px;" title="Previous Month">
+        <div class="settings-section-card" style="margin-top: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-weight: 800; font-size: 15px; color: var(--text-primary);" id="calMonthYearDisplay">November 2026</div>
+            <div style="display: flex; gap: 6px;">
+              <button id="btnCalPrevMonth" class="icon-btn" style="width: 32px; height: 32px;" title="Previous Month">
                 <svg class="icon-svg-sm" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
               </button>
-              <button id="btnCalNextMonth" class="icon-btn" style="width: 30px; height: 30px;" title="Next Month">
+              <button id="btnCalNextMonth" class="icon-btn" style="width: 32px; height: 32px;" title="Next Month">
                 <svg class="icon-svg-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
               </button>
             </div>
           </div>
 
-          <div id="calWeekdayHeader" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
+          <div id="calWeekdayHeader" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 8px;">
             <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
           </div>
 
           <div id="calDaysGrid" class="cal-grid-container"></div>
 
           <!-- Selected Date Info Banner -->
-          <div id="calSelectedDateBanner" style="display: none; margin-top: 14px; padding: 12px; border-radius: var(--radius-md); background: var(--bg-card-subtle);">
-            <div id="calSelectedDateTitle" style="font-weight: 700; font-size: 12px;">Selected Date</div>
-            <div id="calSelectedDateDetails" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;"></div>
+          <div id="calSelectedDateBanner" style="display: none; margin-top: 14px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);">
+            <div id="calSelectedDateTitle" style="font-weight: 800; font-size: 13px; color: var(--text-primary);">Selected Date</div>
+            <div id="calSelectedDateDetails" style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;"></div>
           </div>
 
-          <button id="btnExportIcs" class="btn-primary" style="margin-top: 14px;">
+          <button id="btnExportIcs" class="btn-primary" style="margin-top: 16px;">
             <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span>Sync to Phone Calendar (.ics)</span>
           </button>
@@ -204,7 +222,7 @@
         <div class="settings-section-card">
           <div class="settings-card-title">
             <span>Academic Holidays & Recesses</span>
-            <button id="btnOpenAddHolidaySheet" class="btn-secondary" style="margin-left: auto; font-size: 10px; padding: 4px 8px;">+ Add</button>
+            <button id="btnOpenAddHolidaySheet" class="btn-secondary" style="font-size: 11px; padding: 4px 10px;">+ Add Recess</button>
           </div>
           <div id="holidayRecordsList"></div>
         </div>
@@ -212,21 +230,21 @@
 
       <!-- ================= PANE 05: TIMETABLE SCANNER (OCR) ================= -->
       <section id="tab-ocr" class="swiss-pane-block" style="display: none; padding: 0 16px;">
-        <div class="settings-section-card">
-          <div class="settings-card-title">Snap or Upload Timetable</div>
-          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
-            Take a photo of your printed college timetable. The optical recognition parser will read your classes and fill your schedule automatically.
+        <div class="settings-section-card" style="margin-top: 12px;">
+          <div class="settings-card-title">Optical Timetable Scanner</div>
+          <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+            Snap or upload a photo of your printed college timetable. The optical recognition parser analyzes rows, hours, and courses automatically.
           </p>
 
           <div id="ocrUploadDropzone" class="ocr-drop-box">
             <input type="file" id="ocrInputFile" accept="image/*" style="display: none;">
-            <svg class="icon-svg" style="width: 32px; height: 32px; color: var(--color-brand); margin-bottom: 8px;" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            <div style="font-weight: 700; font-size: 13px;">Tap to Choose or Snap Photo</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supports JPG, PNG, WEBP</div>
+            <svg class="icon-svg" style="width: 36px; height: 36px; color: var(--color-orange); margin-bottom: 8px;" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <div style="font-weight: 800; font-size: 14px; color: var(--text-primary);">Tap to Choose or Snap Photo</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Supports JPG, PNG, WEBP • Zero cloud upload</div>
           </div>
 
           <div id="ocrPreviewContainer" style="display: none; margin-top: 14px; text-align: center;">
-            <img id="ocrPreviewImg" src="" alt="OCR Preview" style="max-height: 180px; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-card);">
+            <img id="ocrPreviewImg" src="" alt="OCR Preview" style="max-height: 200px; max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
             <canvas id="ocrCanvas" style="display: none;"></canvas>
             <div style="display: flex; gap: 8px; margin-top: 10px;">
               <button id="btnExecuteOcr" class="btn-primary" style="flex: 2;">Analyze Schedule</button>
@@ -235,18 +253,18 @@
           </div>
 
           <!-- Detected slots review -->
-          <div id="ocrResultBox" style="display: none; margin-top: 14px; padding: 14px; border-radius: var(--radius-md); background: var(--bg-card-subtle);">
+          <div id="ocrResultBox" style="display: none; margin-top: 14px; padding: 14px; border-radius: var(--radius-md); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 12px;">Detected Classes</span>
-              <span id="ocrDetectedCount" class="section-badge" style="color: var(--color-green);">0 Found</span>
+              <span style="font-weight: 800; font-size: 13px; color: var(--text-primary);">Detected Waypoints</span>
+              <span id="ocrDetectedCount" class="section-badge" style="color: var(--color-emerald);">0 Found</span>
             </div>
             <div id="ocrSlotsPreviewList" style="margin-bottom: 12px;"></div>
-            <button id="btnCommitOcrSlots" class="btn-primary" style="background: var(--color-green);">Confirm & Add to Timetable</button>
+            <button id="btnCommitOcrSlots" class="btn-primary" style="background: var(--color-emerald);">Confirm & Add to Schedule</button>
           </div>
 
           <!-- Presets -->
-          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-card);">
-            <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Or load a sample curriculum:</div>
+          <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">Or load sample curriculum:</div>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
               <button class="btn-secondary preset-btn" data-preset="cse" style="font-size: 11px;">Computer Science</button>
               <button class="btn-secondary preset-btn" data-preset="ece" style="font-size: 11px;">Electronics</button>
@@ -258,11 +276,11 @@
         </div>
       </section>
 
-      <!-- ================= PANE 06: SETTINGS ================= -->
+      <!-- ================= PANE 06: SETTINGS & TELEMETRY ================= -->
       <section id="tab-config" class="swiss-pane-block" style="display: none; padding: 0 16px;">
 
         <!-- Student Profile Card -->
-        <div class="settings-section-card">
+        <div class="settings-section-card" style="margin-top: 12px;">
           <div class="settings-card-title">Student Profile</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="input-field-group">
@@ -284,23 +302,23 @@
               <input type="text" id="cfgCampusProgram" class="text-input" placeholder="Sem 5 • Sec A">
             </div>
           </div>
-          <button id="btnSaveProfile" class="btn-secondary" style="width: 100%; margin-top: 4px;">Save Profile</button>
+          <button id="btnSaveProfile" class="btn-primary" style="margin-top: 4px;">Save Profile</button>
         </div>
 
         <!-- Target Attendance Slider Card -->
         <div class="settings-section-card">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <div class="settings-card-title" style="margin: 0;">Target Attendance</div>
-            <span id="cfgCutoffDisplay" style="font-size: 15px; font-weight: 800; color: var(--color-brand);">75.0%</span>
+            <span id="cfgCutoffDisplay" style="font-size: 16px; font-weight: 900; color: var(--color-orange);">75.0%</span>
           </div>
-          <input type="range" id="cfgCutoffRange" min="50" max="95" step="1" value="75" style="width: 100%; accent-color: var(--color-brand); margin: 8px 0;">
+          <input type="range" id="cfgCutoffRange" min="50" max="95" step="1" value="75" style="width: 100%; accent-color: var(--color-orange); margin: 8px 0;">
           <input type="number" id="cfgCutoff" class="text-input" min="50" max="95" value="75" style="display: none;">
           <p style="font-size: 11px; color: var(--text-muted);">Deficit alerts trigger when a course drops below this target.</p>
         </div>
 
         <!-- Notification Parameters Card -->
         <div class="settings-section-card">
-          <div class="settings-card-title">Notifications & Alarms</div>
+          <div class="settings-card-title">Notifications & Haptics</div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
             <div class="input-field-group">
@@ -342,11 +360,11 @@
 
         <!-- Storage & Reset Actions Card -->
         <div class="settings-section-card">
-          <div class="settings-card-title">Data & Maintenance</div>
-          <div style="font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          <div class="settings-card-title">Data Telemetry & Backups</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
             <div><strong>Storage:</strong> <span id="storageStateSize">Calculating...</span></div>
             <div><strong>Archived Dates:</strong> <span id="storageDailyCount">0</span> dates stored locally</div>
-            <div><strong>Privacy:</strong> 100% on your device. Zero cloud telemetry.</div>
+            <div><strong>Privacy:</strong> 100% on device. Zero tracking.</div>
           </div>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -354,7 +372,7 @@
             <button id="btnResetTallies" class="btn-secondary" style="flex: 1;">New Semester Reset</button>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 8px;">
-            <button id="btnExportJson" class="btn-secondary" style="flex: 1;">Backup Data</button>
+            <button id="btnExportJson" class="btn-secondary" style="flex: 1;">Backup JSON</button>
             <button id="btnImportJson" class="btn-secondary" style="flex: 1;">Restore</button>
             <input type="file" id="inpRestoreBackup" accept=".json" style="display: none;">
             <button id="btnPurgeState" class="btn-secondary btn-danger" style="flex: 1;">Clear All</button>
@@ -365,17 +383,45 @@
 
     </main>
 
+    <!-- ================= FLOATING ROUTE BOTTOM DOCK ================= -->
+    <nav class="route-bottom-dock swiss-tabs">
+      <button class="dock-tab swiss-tab active" data-tab="tab-routine">
+        <svg class="dock-icon" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+        <span class="dock-label">Route</span>
+      </button>
+      <button class="dock-tab swiss-tab" data-tab="tab-timetable">
+        <svg class="dock-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="dock-label">Schedule</span>
+      </button>
+      <button class="dock-tab swiss-tab" data-tab="tab-subjects">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+        <span class="dock-label">Courses</span>
+      </button>
+      <button class="dock-tab swiss-tab" data-tab="tab-holidays">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <span class="dock-label">Recess</span>
+      </button>
+      <button class="dock-tab swiss-tab" data-tab="tab-ocr">
+        <svg class="dock-icon" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+        <span class="dock-label">Scanner</span>
+      </button>
+      <button class="dock-tab swiss-tab" data-tab="tab-config">
+        <svg class="dock-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="dock-label">Settings</span>
+      </button>
+    </nav>
+
     <!-- ================= FULL DAY APPRECIATION MODAL ================= -->
     <div id="modalCelebration" class="modal-overlay hidden">
       <div class="modal-box" style="text-align: center;">
-        <div style="width: 54px; height: 54px; border-radius: var(--radius-pill); background: var(--color-green-soft); color: var(--color-green); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
-          <svg class="icon-svg" style="width: 28px; height: 28px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <div style="width: 58px; height: 58px; border-radius: var(--radius-pill); background: var(--color-emerald-soft); color: var(--color-emerald); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+          <svg class="icon-svg" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <div style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">Day Conquered!</div>
-        <p id="celebrationQuoteDisplay" style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
-          Hooray you did it! You attended the whole day!
+        <div style="font-size: 20px; font-weight: 900; color: var(--text-primary); margin-bottom: 6px;">Expedition Completed!</div>
+        <p id="celebrationQuoteDisplay" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 18px;">
+          Flawless route completion! You attended every single scheduled stop today.
         </p>
-        <button id="btnCloseCelebration" class="btn-primary" style="background: var(--color-green);">Awesome</button>
+        <button id="btnCloseCelebration" class="btn-primary" style="background: var(--color-emerald);">Keep Moving Forward</button>
       </div>
     </div>
 
@@ -383,7 +429,7 @@
     <div id="modalSlot" class="modal-overlay hidden">
       <div class="modal-box">
         <div class="modal-header">
-          <div class="modal-title" id="slotModalHeading">Add Class Slot</div>
+          <div class="modal-title" id="slotModalHeading">Add Route Waypoint</div>
           <button id="btnCloseSlotModal" class="modal-close-btn">
             <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
@@ -417,10 +463,10 @@
           </div>
           <div class="input-field-group">
             <label class="input-label" for="slotRoomInp">Room / Facility</label>
-            <input type="text" id="slotRoomInp" class="text-input" placeholder="e.g. Room 101 or Lab 2">
+            <input type="text" id="slotRoomInp" class="text-input" placeholder="e.g. Hall 302 or Lab 4">
           </div>
           <div style="display: flex; gap: 8px; margin-top: 14px;">
-            <button type="submit" class="btn-primary" style="flex: 2;">Save Class</button>
+            <button type="submit" class="btn-primary" style="flex: 2;">Save Waypoint</button>
             <button type="button" id="btnCancelSlotModal" class="btn-secondary" style="flex: 1;">Cancel</button>
           </div>
         </form>
@@ -431,7 +477,7 @@
     <div id="modalSubject" class="modal-overlay hidden">
       <div class="modal-box">
         <div class="modal-header">
-          <div class="modal-title" id="subjectModalHeading">Add Course</div>
+          <div class="modal-title" id="subjectModalHeading">Register Course</div>
           <button id="btnCloseSubjectModal" class="modal-close-btn">
             <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
@@ -485,11 +531,11 @@
             <input type="date" id="holidayDateInp" class="text-input" required>
           </div>
           <div class="input-field-group">
-            <label class="input-label" for="holidayTitleInp">Holiday Name</label>
-            <input type="text" id="holidayTitleInp" class="text-input" placeholder="e.g. Sports Day" required>
+            <label class="input-label" for="holidayTitleInp">Holiday / Recess Name</label>
+            <input type="text" id="holidayTitleInp" class="text-input" placeholder="e.g. Semester Recess" required>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 14px;">
-            <button type="submit" class="btn-primary" style="flex: 2;">Add Holiday</button>
+            <button type="submit" class="btn-primary" style="flex: 2;">Add Recess</button>
             <button type="button" id="btnCancelHolidayModal" class="btn-secondary" style="flex: 1;">Cancel</button>
           </div>
         </form>
@@ -500,13 +546,13 @@
     <div id="modalBugReport" class="modal-overlay hidden">
       <div class="modal-box">
         <div class="modal-header">
-          <div class="modal-title">Send Feedback / Bug Report</div>
+          <div class="modal-title">Feedback & Diagnostics</div>
           <button id="btnCloseBugReport" class="modal-close-btn">
             <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-          Smart Attendance v2.4 • Developed by Sohan Gowda. Reports are dispatched securely to the developer via Formspree.
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+          Smart Attendance Logistics Edition • Developed by Sohan Gowda. Reports are dispatched securely to the developer inbox.
         </p>
         <form id="formBugReport" action="https://formspree.io/f/xvgopkzw" method="POST">
           <div class="input-field-group">
@@ -516,20 +562,55 @@
           <div class="input-field-group">
             <label class="input-label" for="reportCategorySel">Category</label>
             <select name="category" id="reportCategorySel" class="select-input">
-              <option value="ui_ux">Design / Usability</option>
-              <option value="attendance_calculation">Attendance Calculations</option>
-              <option value="timetable_sync">Timetable Schedule</option>
-              <option value="notifications">Notifications & Alarms</option>
-              <option value="scanner_ocr">Scanner / OCR</option>
+              <option value="route_ui">Logistics Route UI / Navigation</option>
+              <option value="attendance_math">Attendance & Bunk Math</option>
+              <option value="timetable_sync">Timetable & Waypoints</option>
+              <option value="notifications">Alarms & Notifications</option>
+              <option value="scanner_ocr">Schedule Scanner / OCR</option>
             </select>
           </div>
           <div class="input-field-group">
             <label class="input-label" for="reportMessageInp">Message</label>
-            <textarea name="message" id="reportMessageInp" class="text-input" rows="3" placeholder="Describe the issue or idea..." required></textarea>
+            <textarea name="message" id="reportMessageInp" class="text-input" rows="3" placeholder="Describe the issue or feedback..." required></textarea>
           </div>
-          <div id="bugReportNotice" style="font-size: 11px; font-weight: 600; margin-bottom: 8px;"></div>
-          <button type="submit" id="btnSubmitBugReport" class="btn-primary">Send Report</button>
+          <div id="bugReportNotice" style="font-size: 11px; font-weight: 700; margin-bottom: 8px;"></div>
+          <button type="submit" id="btnSubmitBugReport" class="btn-primary">Dispatch Report</button>
         </form>
+      </div>
+    </div>
+
+    <!-- ================= MOBILE APP INSTALLATION MODAL (APK / PWA) ================= -->
+    <div id="modalApkManual" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div class="modal-title">Install Native Mobile App</div>
+          <button id="btnCloseApkModal" class="modal-close-btn">
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+          You can install this app directly onto your Android, iPhone, or iPad home screen for full offline access, alarms, and full-screen experience.
+        </p>
+
+        <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 12px;">
+          <div style="font-weight: 800; font-size: 13px; color: var(--color-orange); margin-bottom: 4px;">Option A: 1-Tap Home Screen App (PWA)</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
+            • <strong>Chrome / Android:</strong> Tap browser menu (⋮) → "Add to Home screen" or "Install App".<br>
+            • <strong>Safari / iOS:</strong> Tap Share button (<svg class="icon-svg-xs" style="vertical-align: middle;" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>) → "Add to Home Screen".
+          </div>
+        </div>
+
+        <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 14px;">
+          <div style="font-weight: 800; font-size: 13px; color: var(--color-emerald); margin-bottom: 4px;">Option B: Standalone Android APK</div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
+            A complete Flutter/Android project harness is bundled in the repository. Run <code>flutter build apk --release</code> to produce a signed <code>.apk</code> for direct side-loading!
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button id="btnPwaPrompt" class="btn-primary" style="flex: 2;">Install Now</button>
+          <button id="btnDismissApkModal" class="btn-secondary" style="flex: 1;">Close</button>
+        </div>
       </div>
     </div>
 

@@ -165,7 +165,14 @@
     check: `<svg class="icon-svg-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
     cross: `<svg class="icon-svg-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
     exempt: `<svg class="icon-svg-sm" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="4" y1="20" x2="20" y2="4"/></svg>`,
-    alert: `<svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`
+    alert: `<svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    locationPin: `<svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>`,
+    teacher: `<svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    route: `<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`,
+    calendar: `<svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    courses: `<svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>`,
+    scanner: `<svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>`,
+    settings: `<svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`
   };
 
   // =========================================================================
@@ -738,12 +745,31 @@
 
     if (statusPill && adviceText) {
       if (stats.isSafe) {
-        statusPill.textContent = "You're on track";
+        statusPill.innerHTML = `<span class="status-dot-pulse"></span><span>Route On Track</span>`;
+        statusPill.className = 'dispatch-status-badge';
         adviceText.textContent = `${stats.safeBunks} safe bunk unit${stats.safeBunks === 1 ? '' : 's'} available`;
+        adviceText.className = 'telemetry-advice-pill';
       } else {
-        statusPill.textContent = "Low Attendance";
-        adviceText.textContent = `Attend next ${stats.recoveryRequired} consecutive class${stats.recoveryRequired === 1 ? '' : 'es'}`;
+        statusPill.innerHTML = `<span class="status-dot-pulse"></span><span>Deficit Alert</span>`;
+        statusPill.className = 'dispatch-status-badge danger';
+        adviceText.textContent = `Attend next ${stats.recoveryRequired} consecutive stop${stats.recoveryRequired === 1 ? '' : 's'}`;
+        adviceText.className = 'telemetry-advice-pill danger';
       }
+    }
+
+    // Update Route Vector Progress Bar
+    const now = new Date();
+    const systemDayIdx = now.getDay() === 0 ? 1 : now.getDay();
+    const todaySlots = store.timetable.filter(s => s.day === systemDayIdx);
+    const markedCount = todaySlots.filter(s => store.dailyActions[s.id]).length;
+    const routeProgFill = document.getElementById('routeProgressFill');
+    const routeProgText = document.getElementById('routeProgressText');
+    if (routeProgFill && todaySlots.length > 0) {
+      const progPct = (markedCount / todaySlots.length) * 100;
+      routeProgFill.style.width = `${progPct}%`;
+      if (routeProgText) routeProgText.textContent = `${markedCount} of ${todaySlots.length} stops completed (${progPct.toFixed(0)}%)`;
+    } else if (routeProgText) {
+      routeProgText.textContent = 'No route stops scheduled today';
     }
 
     // Update Storage Telemetry Readout
@@ -826,10 +852,13 @@
     if (holiday && !isViewingCustomDay) {
       if (statusTag) statusTag.textContent = 'Holiday';
       feed.innerHTML = `
-        <div style="background-color: var(--color-green-soft); border: 1px solid var(--color-green-border); border-radius: var(--radius-lg); padding: 22px; text-align: center;">
-          <div style="font-size: 15px; font-weight: 800; color: var(--color-green);">Academic Holiday</div>
-          <div style="font-size: 13px; color: var(--text-main); margin-top: 4px; font-weight: 600;">${escapeHtml(holiday.title)}</div>
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Enjoy your recess. Zero classes today.</div>
+        <div style="background-color: var(--color-emerald-soft); border: 1px solid var(--color-emerald-border); border-radius: var(--radius-xl); padding: 28px 20px; text-align: center; margin: 0 16px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--color-emerald); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <div style="font-size: 16px; font-weight: 800; color: var(--color-emerald);">Academic Recess • No Route Active</div>
+          <div style="font-size: 14px; color: var(--text-primary); margin-top: 4px; font-weight: 700;">${escapeHtml(holiday.title)}</div>
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Zero classes scheduled today. Select any weekday above to preview route waypoints.</div>
         </div>
       `;
       return;
@@ -838,9 +867,9 @@
     if (targetDayIdx === 0) {
       if (statusTag) statusTag.textContent = 'Weekend';
       feed.innerHTML = `
-        <div style="padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg);">
-          <div style="font-size: 15px; color: var(--text-main); font-weight: 800; margin-bottom: 4px;">Sunday Recess</div>
-          <div>No scheduled sessions today. Select any weekday above to preview routines.</div>
+        <div style="padding: 28px 18px; text-align: center; font-size: 13px; color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); margin: 0 16px;">
+          <div style="font-size: 16px; color: var(--text-primary); font-weight: 800; margin-bottom: 6px;">Sunday Recess</div>
+          <div>Zero dispatches or lectures scheduled today. Select any weekday above to preview your route.</div>
         </div>
       `;
       return;
@@ -848,20 +877,21 @@
 
     const todaySlots = store.timetable.filter(s => s.day === targetDayIdx);
     if (todaySlots.length === 0) {
-      if (statusTag) statusTag.textContent = 'No Classes';
+      if (statusTag) statusTag.textContent = 'No Waypoints';
       feed.innerHTML = `
-        <div style="padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg);">
-          No classes scheduled for ${dayNames[targetDayIdx]}. Tap "Schedule" to add classes.
+        <div style="padding: 28px 18px; text-align: center; font-size: 13px; color: var(--text-secondary); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); margin: 0 16px;">
+          <div style="font-size: 15px; color: var(--text-primary); font-weight: 800; margin-bottom: 4px;">No Scheduled Stops</div>
+          <div>No class waypoints found for ${dayNames[targetDayIdx]}. Tap "Schedule" below to register timetable waypoints.</div>
         </div>
       `;
       return;
     }
 
-    let html = '';
+    let html = '<div class="route-stepper-container">';
     const currentMins = now.getHours() * 60 + now.getMinutes();
     let deficitFound = false;
 
-    todaySlots.forEach((slot) => {
+    todaySlots.forEach((slot, idx) => {
       const sub = store.getSubject(slot.subjectId);
       const subStats = store.calcSubjectStats(slot.subjectId);
       const action = store.dailyActions[slot.id];
@@ -875,49 +905,71 @@
       // Check danger banner trigger
       if (!subStats.isSafe && !action) {
         deficitFound = true;
-        showDangerBanner(`Attention: ${sub.name} is at ${subStats.percentage.toFixed(0)}% (Below ${store.settings.criteriaCutoff}% target). Don't miss this class!`);
+        showDangerBanner(`Attention: ${sub.name} is at ${subStats.percentage.toFixed(0)}% (Below ${store.settings.criteriaCutoff}% target). Don't miss this stop!`);
       }
 
-      let cardClass = 'class-card';
-      if (isLive) cardClass += ' active-live';
-      if (action === 'yes') cardClass += ' attended';
-      if (action === 'no') cardClass += ' missed';
-      if (action === 'cancel') cardClass += ' cancelled';
+      const isDone = action === 'yes';
+      const isMissed = action === 'no';
+      const isExempt = action === 'cancel';
+      const isLast = idx === todaySlots.length - 1;
 
       html += `
-        <div class="${cardClass}">
-          <div class="class-card-top">
-            <div>
-              <span class="class-time-tag">${slot.startTime} – ${slot.endTime}</span>
-              <div class="class-title">${escapeHtml(sub.name)}</div>
+        <div class="route-waypoint ${isLive ? 'is-live' : ''} ${action ? 'is-' + action : 'is-pending'}">
+          <!-- Waypoint Stem: Connecting Track & Pin -->
+          <div class="waypoint-stem">
+            <div class="waypoint-node ${isDone ? 'node-done' : (isMissed ? 'node-missed' : (isExempt ? 'node-exempt' : (isLive ? 'node-live' : 'node-upcoming')))}">
+              ${isDone ? SVG_ICONS.check : (isMissed ? SVG_ICONS.cross : (isExempt ? SVG_ICONS.exempt : `<span class="node-num">${String(idx + 1).padStart(2, '0')}</span>`))}
+              ${isLive ? '<div class="node-radar-ring"></div>' : ''}
             </div>
-            <span class="section-badge" style="color: ${subStats.isSafe ? 'var(--color-green)' : 'var(--color-red)'}; font-weight: 700;">
-              ${subStats.percentage.toFixed(0)}%
-            </span>
+            ${!isLast ? `<div class="waypoint-connector ${isDone ? 'connector-done' : ''}"></div>` : ''}
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted);">
-            <span>${escapeHtml(slot.room || 'Room')} • ${escapeHtml(sub.teacher || 'Faculty')}</span>
-            ${isLive ? '<span style="color: var(--color-brand); font-weight: 700;">LIVE NOW</span>' : ''}
-          </div>
+          <!-- Waypoint Stop Delivery Card -->
+          <div class="waypoint-card class-card ${isLive ? 'active-live' : ''} ${isDone ? 'attended' : (isMissed ? 'missed' : (isExempt ? 'cancelled' : ''))}">
+            <div class="waypoint-top">
+              <div class="waypoint-badge-group">
+                <span class="waypoint-stop-pill">STOP ${String(idx + 1).padStart(2, '0')}</span>
+                <span class="waypoint-time-pill">${slot.startTime} – ${slot.endTime}</span>
+              </div>
+              <span class="waypoint-health-pill ${subStats.isSafe ? 'safe' : 'danger'}">
+                ${subStats.percentage.toFixed(0)}% • ${subStats.isSafe ? (subStats.safeBunks > 0 ? `+${subStats.safeBunks} Safe` : 'On Target') : `Need ${subStats.recoveryRequired}`}
+              </span>
+            </div>
 
-          <div class="class-actions-row">
-            <button class="btn-action-pill btn-yes ${action === 'yes' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="yes">
-              ${SVG_ICONS.check}
-              <span>${action === 'yes' ? 'Attended' : 'Present'}</span>
-            </button>
-            <button class="btn-action-pill btn-no ${action === 'no' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="no">
-              ${SVG_ICONS.cross}
-              <span>${action === 'no' ? 'Missed' : 'Absent'}</span>
-            </button>
-            <button class="btn-action-pill btn-cancel ${action === 'cancel' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="cancel">
-              ${SVG_ICONS.exempt}
-              <span>${action === 'cancel' ? 'Cancelled' : 'No Class'}</span>
-            </button>
+            <div class="waypoint-body">
+              <div class="waypoint-course-title">${escapeHtml(sub.name)}</div>
+              <div class="waypoint-details-row">
+                <span class="waypoint-meta-tag">
+                  ${SVG_ICONS.locationPin}
+                  <span>${escapeHtml(slot.room || 'Main Hall')}</span>
+                </span>
+                <span class="waypoint-meta-tag">
+                  ${SVG_ICONS.teacher}
+                  <span>${escapeHtml(sub.teacher || 'Faculty')}</span>
+                </span>
+                ${isLive ? '<span class="waypoint-live-tag"><span class="live-pulse-dot"></span>LIVE STOP</span>' : ''}
+              </div>
+            </div>
+
+            <div class="waypoint-actions class-actions-row">
+              <button class="route-action-btn swiss-action-btn btn-action-pill btn-yes ${action === 'yes' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="yes" title="Mark Present / Attended">
+                ${SVG_ICONS.check}
+                <span>${action === 'yes' ? 'Delivered' : 'Present'}</span>
+              </button>
+              <button class="route-action-btn swiss-action-btn btn-action-pill btn-no ${action === 'no' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="no" title="Mark Missed / Absent">
+                ${SVG_ICONS.cross}
+                <span>${action === 'no' ? 'Skipped' : 'Absent'}</span>
+              </button>
+              <button class="route-action-btn swiss-action-btn btn-action-pill btn-cancel ${action === 'cancel' ? 'active' : ''}" data-slot="${slot.id}" data-sub="${slot.subjectId}" data-status="cancel" title="Exempt / No Class">
+                ${SVG_ICONS.exempt}
+                <span>${action === 'cancel' ? 'Exempt' : 'No Class'}</span>
+              </button>
+            </div>
           </div>
         </div>
       `;
     });
+    html += '</div>';
 
     if (!deficitFound && banner) {
       banner.classList.add('hidden');
@@ -1646,7 +1698,7 @@
 
     // 4. Attendance Action Buttons
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.swiss-action-btn');
+      const btn = e.target.closest('.route-action-btn, .swiss-action-btn, .btn-action-pill');
       if (btn) {
         const slotId = btn.getAttribute('data-slot');
         const subId = btn.getAttribute('data-sub');
@@ -2110,13 +2162,10 @@
     const campusTrigger = document.getElementById('swissCampusTrigger');
     if (campusTrigger) {
       campusTrigger.addEventListener('click', () => {
-        const dept = prompt('SPECIFY ACADEMIC DEPARTMENT:', store.campus.dept);
-        const prog = prompt('SPECIFY PROGRAM & SECTION:', store.campus.program);
-        if (dept) store.campus.dept = dept.trim().toUpperCase();
-        if (prog) store.campus.program = prog.trim().toUpperCase();
-        store.save(STORAGE_KEYS.CAMPUS, store.campus);
-        document.getElementById('labelCampusDept').textContent = store.campus.dept;
-        document.getElementById('labelCampusProgram').textContent = store.campus.program;
+        const configTabBtn = document.querySelector('.swiss-tab[data-tab="tab-config"]');
+        switchTab('tab-config', configTabBtn);
+        const nameField = document.getElementById('cfgStudentName');
+        if (nameField) nameField.focus();
       });
     }
 
